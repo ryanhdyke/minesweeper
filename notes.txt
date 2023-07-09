@@ -1,0 +1,6 @@
+Additions: a way that you cant select a bomb on the first click (should select a zero spot)
+           add ability to choose custom size along with preset options
+           add flag and bomb images
+
+BUGS: need to test the gameWin method more
+      when uncovering, if a square is flagged, it should not be uncovered
