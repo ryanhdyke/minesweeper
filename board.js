@@ -6,22 +6,20 @@ class Board {
 
         this.grid = []
 
-        let bombArray = this.generateBombs()
+        // this.placeBombsAndNumbers()
+        // this.grid = []
+
+        // let bombArray = this.generateBombs()
 
         for (let i = 0; i < this.height; i++) {
             let row = []
             for (let j = 0; j < this.width; j++) {
-                let hasBomb = false
-                if (this.pointInArray(bombArray, j, i)) {
-                    // print("Bomb marked")
-                    hasBomb = true
-                }
-                row.push(new Square(j, i, hasBomb))
+                row.push(new Square(j, i, false))
             }
             this.grid.push(row)
         }
 
-        this.generateNumbers()
+        // this.generateNumbers()
     }
 
     show() {
@@ -55,7 +53,27 @@ class Board {
         }
     }
 
-    generateBombs() {
+    placeBombsAndNumbers(firstClickedSquare) {
+        this.grid = []
+        let bombArray = this.generateBombs(firstClickedSquare)
+
+        for (let i = 0; i < this.height; i++) {
+            let row = []
+            for (let j = 0; j < this.width; j++) {
+                let hasBomb = false
+                if (this.pointInArray(bombArray, j, i)) {
+                    // print("Bomb marked")
+                    hasBomb = true
+                }
+                row.push(new Square(j, i, hasBomb))
+            }
+            this.grid.push(row)
+        }
+
+        this.generateNumbers()
+    }
+
+    generateBombs(firstClickedSquare) {
         let bombArray = []
 
         let i = 0
@@ -64,12 +82,16 @@ class Board {
             //if duplicate, redraw
             let bombX = Math.floor(Math.random() * this.width)
             let bombY = Math.floor(Math.random() * this.height)
-            if (!this.pointInArray(bombArray, bombX, bombY)) {
+            if (!this.pointInArray(bombArray, bombX, bombY) && !this.bombNearPosition(firstClickedSquare.x, firstClickedSquare.y, bombX, bombY)) {
                 bombArray.push([bombX, bombY])
                 i += 1
             }
         }
         return bombArray
+    }
+
+    bombNearPosition(clickX, clickY, bombX, bombY) {
+        return (clickX - 1 <= bombX && bombX <= clickX + 1 && clickY - 1 <= bombY && bombY <= clickY + 1)
     }
 
     pointInArray(arr, x, y) {

@@ -49,10 +49,11 @@ class Square {
         else if (this.status === TILE_STATUSES.FLAGGED) {
             //draw a gray square with a flag on top
             //draw a red square for now
-            fill(255, 0, 0)
+            fill(175)
             stroke(0)
             strokeWeight(1)
             rect(this.xpx, this.ypx, squareSize, squareSize)
+            image(flagImg, this.xpx + (squareSize / 2), this.ypx + (squareSize / 2), 20, 20)
         }
         else  { //if (this.status === TILE_STATUSES.UNCOVERED) {
             //it is uncovered
@@ -60,16 +61,13 @@ class Square {
             //    then uncover all tiles (set all status to uncovered)
             //draw a lighter gray square with a number in it
             //if the number is zero, do not display the number
-            if (this.hasBomb) {
-                fill(0)
-            }
-            else {
-                fill(150)
-            }
-            
+            fill(150)
             stroke(0)
             strokeWeight(1)
             rect(this.xpx, this.ypx, squareSize, squareSize)
+            if (this.hasBomb) {
+                image(bombImg, this.xpx + (squareSize / 2), this.ypx + (squareSize / 2), 20, 20)
+            }
 
             if (this.number != 0 && !this.hasBomb) {
                 fill(0)

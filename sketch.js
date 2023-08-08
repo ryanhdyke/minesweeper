@@ -3,17 +3,21 @@ var gameWidth = 16
 var gameHeight = 16
 var bombs = 40
 
-// var firstMove = true
 var bombCounter = bombs
 
 //16x30 w/ 99
 //16x16 w/ 40
 //9x9 w/ 10
 
+var flagImg;
+var bombImg;
+
 var squareSize = 25
 
 var gameLost = false
 var gameWon = false
+var startingScreen = true
+var firstClick = true
 
 const TILE_STATUSES = {
   HIDDEN: "hidden",
@@ -23,13 +27,12 @@ const TILE_STATUSES = {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  // var x = (windowWidth - width) / 2;
-  // var y = ((windowHeight - height) / 2) + 20;
-  // cnv.position(x, y);
-
   imageMode(CENTER)
   rectMode(CENTER)
   textAlign(CENTER, CENTER)
+
+  flagImg = loadImage('images/flag.png')
+  bombImg = loadImage('images/bomb.png')
 
   board = new Board(gameWidth, gameHeight, bombs)
 
@@ -39,7 +42,15 @@ function setup() {
 }
 
 function draw() {
-  background(220);
+  background(220)
+
+  if (startingScreen) {
+    //want a rectangle, buttons for each size, and a option for custom size
+    //all will go away and variables will be set
+    rect(windowWidth / 2, windowHeight / 2, 300, 400, 20)
+    
+    return
+  }
 
   if (gameLost) {
     //uncover all tiles
@@ -56,21 +67,18 @@ function draw() {
     background(0, 255, 0)
   }
 
-  // strokeWeight(3) 
   board.show()
-
-  // strokeWeight(0)
-  // fill(0)
-  // textSize(32)
-  // text(str("Bombs left: " + bombCounter), windowWidth / 2, 50)
-
-   
 }
 
 function mouseReleased() {
   let currSquare = board.getSquareByCoord(mouseX, mouseY)
   if (currSquare === null) {
     return
+  }
+
+  if (firstClick) {
+    board.placeBombsAndNumbers(currSquare)
+    firstClick = false
   }
   // print("(x, y): ", currSquare.x, ", ", currSquare.y, ")")
   if (mouseButton === LEFT) {

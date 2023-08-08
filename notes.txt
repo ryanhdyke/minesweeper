@@ -1,6 +1,9 @@
-Additions: a way that you cant select a bomb on the first click (should select a zero spot)
-           add ability to choose custom size along with preset options
-           add flag and bomb images
+Additions: add ability to choose custom size along with preset options
+           improve winning and losing screens (if win, cant click anymore)
 
 BUGS: need to test the gameWin method more
-      when uncovering, if a square is flagged, it should not be uncovered
+      need to add to win condition, all bombs are flagged
+      test not selecting a bomb on the first click more
+
+Completed: add bomb and flag images
+           a way that you cant select a bomb on the first click (should select a zero spot)
